@@ -12,7 +12,8 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class WgrSportsBookService {
-  version = +environment[environment.access].ver;
+  private ver = '2.00.01';
+  version: string;
   authID = 'nottoday';
   shareQrCode = '';
   availableBalance = 0;
@@ -86,6 +87,7 @@ export class WgrSportsBookService {
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private socket: Socket) {
+    this.version = this.ver.replace('.','');
     this.socket
       .fromEvent<any[]>('getAddressData')
       .subscribe((data: any) => {
@@ -163,7 +165,11 @@ export class WgrSportsBookService {
   }
 
   getAddressData(): void {
-    this.socket.emit('getAddressData', this.userAccount.betAddress);
+    if (environment[environment.access].testAddress) {
+      this.socket.emit('getAddressData', environment[environment.access].testAddress);
+    } else {
+      this.socket.emit('getAddressData', this.userAccount.betAddress);
+    }
   }
 
   updateAccountBalance(newBal: number): void {
@@ -748,7 +754,7 @@ export class WgrSportsBookService {
   }
 
   getBetData(): void {
-    this.socket.emit('getAddressData', this.userAccount.betAddress);
+    this.getAddressData();
   }
 
   // Base Functions

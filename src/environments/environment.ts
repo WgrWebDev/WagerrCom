@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  access: 'dev',
+  access: 'prodDev',
   version: '10001',
   testnet: {
     accountEnabled: true,
@@ -21,6 +21,14 @@ export const environment = {
     socketPath: '/ws',
   },
   prod: {
+    accountEnabled: true,
+    ver: 2,
+    testnet: false,
+    socketUrl: 'https://wagerr.com/wgr',
+    socketPath: '/ws',
+  },
+  prodDev: {
+    testAddress: "WmVVMjkbAo67pzHuMmkH4ZFQSGmeZ2tRh6",
     accountEnabled: true,
     ver: 2,
     testnet: false,
